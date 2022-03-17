@@ -1,35 +1,25 @@
 <script>
-  import { getClient,operationStore, query } from "@urql/svelte";
-  getClient()
-  const searchQuery = operationStore(
-    `query {
-      search(query: "author:toyamarinyon", type:ISSUE, first: 10) { 
-        nodes {
-          ... on PullRequest {
-            id
-            title
-            bodyText
-          }
-          ... on Issue {
-            id
-            title
-            bodyText
-          }
-        }
-      }
-    }`
-  );
+  import { getClient, operationStore, query } from "@urql/svelte";
+  import IssueListItem from "./components/IssueListItem.svelte";
+  import * as gql from "./graphql-operations";
+  getClient();
+  const searchQuery = operationStore(gql.IssuesDocument);
   query(searchQuery);
+
+  $: nodes = $searchQuery.data?.search?.nodes;
 </script>
 
 {#if $searchQuery.fetching}
-<p>Loading...</p>
+  <p>Loading...</p>
 {:else if $searchQuery.error}
-<p>Oh no... {$searchQuery.error.message}</p>
+  <p>Oh no... {$searchQuery.error.message}</p>
 {:else}
-<ul>
-  {#each $searchQuery.data.search.nodes as node}
-    <li>{node.title}</li>
-  {/each}
-</ul>
+  <section class="divide-y divide-dashed">
+    {#each nodes as node}
+      <IssueListItem
+        repositoryName={`${node.repository.owner.login}/${node.repository.name}`}
+        title={node.title}
+      />
+    {/each}
+  </section>
 {/if}

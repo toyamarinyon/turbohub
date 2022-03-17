@@ -1,0 +1,30 @@
+query Issues {
+  search(query: "author:toyamarinyon", type: ISSUE, first: 10) {
+    nodes {
+      ... on PullRequest {
+        id
+        title
+        bodyText
+        repository {
+          id
+          name
+          owner {
+            login
+          }
+        }
+      }
+      ... on Issue {
+        id
+        title
+        bodyText
+        repository {
+          id
+          name
+          owner {
+            login
+          }
+        }
+      }
+    }
+  }
+}

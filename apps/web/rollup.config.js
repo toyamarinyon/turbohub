@@ -5,9 +5,10 @@ import livereload from "rollup-plugin-livereload";
 import replace from "@rollup/plugin-replace";
 import { terser } from "rollup-plugin-terser";
 import postcss from "rollup-plugin-postcss";
-import tailwind from "tailwindcss";
+import sveltePreprocess from "svelte-preprocess";
+import typescript from "@rollup/plugin-typescript";
 const production = !process.env.ROLLUP_WATCH;
-import path from "path";
+import "dotenv/config"
 
 function serve() {
   let server;
@@ -35,7 +36,7 @@ function serve() {
 }
 
 export default {
-  input: "src/main.js",
+  input: "src/main.ts",
   output: {
     sourcemap: true,
     format: "iife",
@@ -45,14 +46,11 @@ export default {
   plugins: [
     svelte({
       preprocess: sveltePreprocess({ sourceMap: !production }),
-			compilerOptions: {
+      compilerOptions: {
         // enable run-time checks when not in production
         dev: !production,
       },
     }),
-    // we'll extract any component CSS out into
-    // a separate file - better for performance
-    // css({ output: "bundle.css" }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
@@ -64,10 +62,12 @@ export default {
       dedupe: ["svelte"],
     }),
     commonjs(),
-		typescript({
-			sourceMap: !production,
-			inlineSources: !production
-		}),
+
+    // Typescript
+    typescript({
+      sourceMap: !production,
+      inlineSources: !production,
+    }),
     // In dev mode, call `npm run start` once
     // the bundle has been generated
     !production && serve(),
@@ -80,11 +80,18 @@ export default {
     // instead of npm run dev), minify
     production && terser(),
 
+    // Inject process.env
     replace({
-      "process.env.NODE_ENV": JSON.stringify("production"),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      "process.env": JSON.stringify({
+        GITHUB_PERSONAL_ACCESS_TOKEN: process.env.GITHUB_PERSONAL_ACCESS_TOKEN,
+      }),
+      preventAssignment: true
     }),
+
+    // use postcss
     postcss({
-    config: "./postcss.config.js"
+      config: "./postcss.config.js"
     }),
   ],
   watch: {

@@ -1,0 +1,17 @@
+schema:
+#  schema.docs.graphql
+  - https://api.github.com/graphql:
+      headers:
+        Authorization: "bearer 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"
+# schema:
+#     - "https://${SHOPIFY_ADMIN_HOST_NAME}/admin/api/${SHOPIFY_ADMIN_API_VERSION}/graphql.json":
+#         headers:
+#           X-Shopify-Access-Token: ${SHOPIFY_ADMIN_PASSWORD}
+
+documents: "./src/**/*.graphql"
+generates:
+  ./src/graphql-operations.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
