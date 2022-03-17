@@ -33,6 +33,6 @@
     <p>Oh no... {$currentViewer.error.message}</p>
   {:else}
     {$currentViewer.data.viewer.login}
+    <Nest login={$currentViewer.data.viewer.login} />
   {/if}
-  <Nest />
 </main>

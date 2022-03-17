@@ -1,10 +1,10 @@
-query Issues {
-  search(query: "author:toyamarinyon", type: ISSUE, first: 10) {
+query Issues($query: String!) {
+  search(query: $query, type: ISSUE, first: 20) {
     nodes {
       ... on PullRequest {
         id
         title
-        bodyText
+        bodyHTML
         repository {
           id
           name
@@ -16,7 +16,7 @@ query Issues {
       ... on Issue {
         id
         title
-        bodyText
+        bodyHTML
         repository {
           id
           name
