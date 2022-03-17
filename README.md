@@ -29,6 +29,20 @@ Superfast issue reader
     GITHUB_PERSONAL_ACCESS_TOKEN=ghp_sample_access_token
     ```
 
+    Turbohub requires following scopes:
+
+    ```
+    user
+    public_repo
+    repo
+    repo_deployment
+    repo:status
+    read:repo_hook
+    read:org
+    read:public_key
+    read:gpg_key
+    ```
+
 1. Install packages with yarn
 
    ```sh
