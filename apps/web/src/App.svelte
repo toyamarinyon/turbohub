@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { createClient, setClient, operationStore, query } from "@urql/svelte";
   import Nest from "./Nest.svelte";
 
