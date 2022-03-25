@@ -1,0 +1,18 @@
+#!/bin/bash
+if [ -e scheme.json ];then
+  echo 'Skips the download query because the scheme exists in this directory.'
+  exit
+fi
+
+
+if [ -e .env ];then
+  source .env
+else
+  echo "You need to set GITHUB_PERSONAL_ACCESS_TOKEN to run an introspection query of the schema."
+  echo "Please \`cp .env.example .env\` and set your GITHUB_PERSONAL_ACCESS_TOKEN"
+  exit 1
+fi
+curl -X GET \
+  -H "Content-Type: application/json" \
+  -H "Authorization: bearer $GITHUB_PERSONAL_ACCESS_TOKEN" \
+  https://api.github.com/graphql | jq > scheme.json

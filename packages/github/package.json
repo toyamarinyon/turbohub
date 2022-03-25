@@ -1,0 +1,23 @@
+{
+  "name": "@turbohub/github",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "graphql-codegen --config codegen.yml -r dotenv/config",
+    "watch": "yarn build --watch",
+    "dev": "run-s download watch",
+    "download": "./download_query"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.6.2",
+    "@graphql-codegen/typed-document-node": "^2.2.8",
+    "@graphql-codegen/typescript": "^2.4.8",
+    "@graphql-codegen/typescript-operations": "^2.3.5",
+    "@graphql-typed-document-node/core": "^3.1.1",
+    "dotenv": "^16.0.0",
+    "npm-run-all": "^4.1.5",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.2"
+  }
+}
