@@ -2,6 +2,7 @@
   import { createClient, setClient, operationStore, query } from "@urql/svelte";
   import Nest from "./Nest.svelte";
   import { env } from "../env";
+  import Notification from "./Notification.svelte";
 
   const client = createClient({
     url: "https://api.github.com/graphql",
@@ -33,6 +34,7 @@
     <p>Oh no... {$currentViewer.error.message}</p>
   {:else}
     {$currentViewer.data.viewer.login}
-    <Nest login={$currentViewer.data.viewer.login} />
+    <!-- <Nest login={$currentViewer.data.viewer.login} /> -->
+    <Notification username={$currentViewer.data.viewer.login} />
   {/if}
 </main>
