@@ -32,3 +32,7 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# scheme
+packages/github/scheme.json
+packages/github/graphql-operations.ts

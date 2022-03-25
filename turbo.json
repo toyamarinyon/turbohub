@@ -4,11 +4,19 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"]
     },
+    "@turbohub/github#build": {
+      "dependsOn": ["$GITHUB_PERSONAL_ACCESS_TOKEN"],
+      "outputs": ["graphql-operations.ts"]
+    },
     "lint": {
       "outputs": []
     },
     "dev": {
       "cache": false
+    },
+    "@turbohub/vite-react#dev": {
+      "dependsOn": ["@turbohub/github#build"]
     }
-  }
+  },
+  "globalDependencies": ["apps/vite-react/.env", "packages/github/.env"]
 }
