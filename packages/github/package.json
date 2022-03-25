@@ -2,11 +2,14 @@
   "name": "@turbohub/github",
   "version": "0.0.0",
   "main": "graphql-operations.ts",
+  "files": [
+    "zodScheme.ts"
+  ],
   "license": "MIT",
   "scripts": {
     "codegen": "graphql-codegen --config codegen.yml -r dotenv/config",
     "build": "run-s download codegen",
-    "watch": "yarn codegen --watch", 
+    "watch": "yarn codegen --watch",
     "dev": "run-s download watch",
     "download": "./download_query"
   },
@@ -19,6 +22,7 @@
     "dotenv": "^16.0.0",
     "npm-run-all": "^4.1.5",
     "tslib": "^2.3.1",
-    "typescript": "^4.6.2"
+    "typescript": "^4.6.2",
+    "zod": "^3.14.2"
   }
 }
