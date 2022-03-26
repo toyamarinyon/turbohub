@@ -19,8 +19,21 @@ function App() {
           },
         ]}
       >
-        <Outlet />
-        <ReactLocationDevtools initialIsOpen={false} />
+        <div className="px-2 divide-y divide-gray-200">
+          <header className="flex py-2">
+            <h1 className="text-3xl font-black">TURBOHUB</h1>
+          </header>
+          <div className="flex">
+            <ul className="w-72">
+              <li>Inbox</li>
+            </ul>
+
+            <div className="px-1 flex-1">
+              <Outlet />
+            </div>
+          </div>
+          <ReactLocationDevtools initialIsOpen={false} />
+        </div>
       </Router>
     </Provider>
   );

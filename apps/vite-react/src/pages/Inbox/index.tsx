@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 import { useNavigate } from "@tanstack/react-location";
-
 import useSWR from "swr";
 import z from "zod";
 import { notification } from "@turbohub/github/zodScheme";
@@ -40,7 +39,7 @@ export function Inbox() {
       url: "https://api.github.com/notifications",
       query: {
         all: true,
-        per_page: 2,
+        per_page: 30,
       },
     },
     gitHubRestApiFetcher(z.array(notification))

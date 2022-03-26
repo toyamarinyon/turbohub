@@ -1,0 +1,25 @@
+# Type queries into this side of the screen, and you will
+# see intelligent typeaheads aware of the current GraphQL type schema,
+# live syntax, and validation errors highlighted within the text.
+
+# We'll get you started with a simple query showing your username!
+query discussionSearch($query: String!) {
+  search(query: $query, type: DISCUSSION, first: 1) {
+    nodes {
+      ... on Discussion {
+        id
+        title
+        bodyText
+        updatedAt
+        url
+        repository {
+          owner {
+            login
+          }
+          id
+          name
+        }
+      }
+    }
+  }
+}
