@@ -24,7 +24,6 @@ function Resource({
       url: url.replace("https://api.github.com/repos", "https://github.com"),
     },
   });
-  console.log(url)
   return (
     <div>
       <a
@@ -90,7 +89,6 @@ interface Props {
 }
 export function Notification({ notification, onClick }: Props) {
   if (notification.subject.url == null) {
-    // return <div>hello</div>
     return <Discussion notification={notification} onClick={onClick} />;
   }
   return (
