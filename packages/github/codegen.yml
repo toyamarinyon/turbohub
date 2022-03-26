@@ -1,0 +1,8 @@
+schema: scheme.json
+documents: "./src/**/*.graphql"
+generates:
+  ./graphql-operations.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
