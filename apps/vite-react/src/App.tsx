@@ -1,9 +1,23 @@
 import { Provider } from "urql";
-import { Outlet, ReactLocation, Router } from "@tanstack/react-location";
+import {
+  Outlet,
+  ReactLocation,
+  Router,
+  MakeGenerics,
+} from "@tanstack/react-location";
 import { ReactLocationDevtools } from "@tanstack/react-location-devtools";
 import { client } from "./lib/urql";
 import "./index.css";
 import { Inbox } from "./pages/Inbox";
+import { ShowIssue } from "./pages/issues/show";
+
+export type LocationGenerics = MakeGenerics<{
+  Params: {
+    owner: string;
+    repo: string;
+    issueNumber: string;
+  };
+}>;
 
 function App() {
   // Set up a ReactLocation instance
@@ -14,8 +28,14 @@ function App() {
         location={location}
         routes={[
           {
-            path: "/",
+            path: "/inbox",
             element: <Inbox />,
+            children: [
+              {
+                path: ":owner/:repo/issues/:issueNumber",
+                element: <ShowIssue />,
+              },
+            ],
           },
         ]}
       >
@@ -28,7 +48,7 @@ function App() {
               <li>Inbox</li>
             </ul>
 
-            <div className="px-1 flex-1">
+            <div className="px-1 flex-1 relative">
               <Outlet />
             </div>
           </div>

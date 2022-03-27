@@ -8,7 +8,7 @@ interface ResourceProps {
   repositoryFullName: string;
   title: string;
   updatedAt: string;
-  onClick: () => void;
+  onClick: (to: string) => void;
 }
 
 function Resource({
@@ -28,7 +28,10 @@ function Resource({
     <div>
       <a
         className="cursor-pointer flex items-center space-x-4 font-bold py-2 px-1"
-        onClick={() => onClick()}
+        onClick={(e) => {
+          e.preventDefault()
+          onClick(url.replace("https://api.github.com/repos", ""))
+        }}
       >
         <div className="flex flex-1 space-x-4">
           <h2 className="w-52">{repositoryFullName}</h2>
@@ -85,7 +88,7 @@ function Discussion({ notification, onClick }: Props) {
 
 interface Props {
   notification: z.infer<typeof notification>;
-  onClick: () => void;
+  onClick: (to: string) => void;
 }
 export function Notification({ notification, onClick }: Props) {
   if (notification.subject.url == null) {
@@ -97,7 +100,7 @@ export function Notification({ notification, onClick }: Props) {
       title={notification.subject.title}
       repositoryFullName={notification.repository.full_name}
       updatedAt={notification.updated_at}
-      onClick={onClick}
+      onClick={(to) => onClick(to)}
     />
   );
 }

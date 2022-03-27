@@ -1,16 +1,17 @@
 import { createContext, useContext } from "react";
-import { useNavigate } from "@tanstack/react-location";
+import { useNavigate, useMatchRoute, Outlet } from "@tanstack/react-location";
 import useSWR from "swr";
 import z from "zod";
 import { notification } from "@turbohub/github/zodScheme";
 import { gitHubRestApiFetcher } from "../../lib/fetcher";
 import { Notification } from "../../components/Notification";
+import { LocationGenerics } from "../../App";
 
 const notificationsScheme = z.array(notification);
 
 const InboxScreenContext = createContext<{
   notifications: z.infer<typeof notificationsScheme>;
-  onNotificationClick: (notificationId: string) => void;
+  onNotificationClick: (linkTo: string) => void;
 }>({
   notifications: [],
   onNotificationClick: () => {},
@@ -25,7 +26,7 @@ export function InboxView() {
           <Notification
             key={notification.id}
             notification={notification}
-            onClick={() => onNotificationClick(notification.id)}
+            onClick={(linkTo) => onNotificationClick(linkTo)}
           />
         ))}
       </section>
@@ -44,20 +45,28 @@ export function Inbox() {
     },
     gitHubRestApiFetcher(z.array(notification))
   );
+  const matchRoute = useMatchRoute<LocationGenerics>();
   const navigate = useNavigate();
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
+  const showDetail =
+    matchRoute({ to: ":owner/:repo/issues/:issueNumber" }) != null;
   return (
     <InboxScreenContext.Provider
       value={{
         notifications: data,
-        onNotificationClick: (notificationId) => {
-          navigate({ to: `./n/${notificationId}` });
+        onNotificationClick: (linkTo) => {
+          navigate({ to: `/inbox/${linkTo}` });
         },
       }}
     >
       <InboxView />
+      {showDetail && (
+        <div className="absolute inset-0">
+          <Outlet />
+        </div>
+      )}
     </InboxScreenContext.Provider>
   );
 }

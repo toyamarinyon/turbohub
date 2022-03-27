@@ -1,4 +1,4 @@
-import z from "zod";
+import z, { string } from "zod";
 
 export const notification = z.object({
   id: z.string(),
@@ -25,4 +25,13 @@ export const thread = z.object({
     type: z.string(),
     url: z.string(),
   }),
+});
+
+export const issue = z.object({
+  id: z.number(),
+  node_id: z.string(),
+  number: z.number(),
+  state: z.string(), // todo: enum
+  title: z.string(),
+  body: z.string().nullable(),
 });
