@@ -39,18 +39,16 @@ function App() {
           },
         ]}
       >
-        <div className="px-2 divide-y divide-gray-200">
+        <div className="px-2 divide-y divide-gray-200 h-screen flex flex-col">
           <header className="flex py-2">
             <h1 className="text-3xl font-black">TURBOHUB</h1>
           </header>
-          <div className="flex">
+          <div className="flex flex-1 overflow-hidden">
             <ul className="w-72">
               <li>Inbox</li>
             </ul>
 
-            <div className="px-1 flex-1 relative">
-              <Outlet />
-            </div>
+            <Outlet />
           </div>
           <ReactLocationDevtools initialIsOpen={false} />
         </div>

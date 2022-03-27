@@ -24,13 +24,15 @@ function Resource({
       url: url.replace("https://api.github.com/repos", "https://github.com"),
     },
   });
+  const to = url.replace("https://api.github.com/repos", "");
   return (
     <div>
       <a
         className="cursor-pointer flex items-center space-x-4 font-bold py-2 px-1"
+        href={to}
         onClick={(e) => {
-          e.preventDefault()
-          onClick(url.replace("https://api.github.com/repos", ""))
+          e.preventDefault();
+          onClick(to);
         }}
       >
         <div className="flex flex-1 space-x-4">

@@ -1,11 +1,14 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useRef } from "react";
 import { useNavigate, useMatchRoute, Outlet } from "@tanstack/react-location";
 import useSWR from "swr";
 import z from "zod";
+import cn from "classnames";
 import { notification } from "@turbohub/github/zodScheme";
 import { gitHubRestApiFetcher } from "../../lib/fetcher";
 import { Notification } from "../../components/Notification";
 import { LocationGenerics } from "../../App";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const notificationsScheme = z.array(notification);
 
@@ -47,6 +50,8 @@ export function Inbox() {
   );
   const matchRoute = useMatchRoute<LocationGenerics>();
   const navigate = useNavigate();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [scrollY, setScrollY] = useState(0);
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
 
@@ -61,12 +66,30 @@ export function Inbox() {
         },
       }}
     >
-      <InboxView />
-      {showDetail && (
-        <div className="absolute inset-0">
-          <Outlet />
-        </div>
-      )}
+      <div
+        className={cn("px-1 flex-1 relative", {
+          "overflow-scroll": !showDetail,
+          "overflow-hidden": showDetail,
+        })}
+        onScroll={() => {
+          if (scrollContainerRef.current == null) {
+            return;
+          }
+          setScrollY(scrollContainerRef.current.scrollTop);
+        }}
+        ref={scrollContainerRef}
+      >
+        <InboxView />
+        {scrollY}
+        {showDetail && (
+          <div
+            className="absolute h-full bg-white w-full"
+            style={{ top: `${scrollY}px` }}
+          >
+            <Outlet />
+          </div>
+        )}
+      </div>
     </InboxScreenContext.Provider>
   );
 }
