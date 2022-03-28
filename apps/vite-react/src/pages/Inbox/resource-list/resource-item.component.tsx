@@ -1,3 +1,4 @@
+import { parseUrl } from "@turbohub/github";
 import { useResource } from "../../../hooks/resource";
 
 export interface ResourceItemProps {
@@ -15,7 +16,8 @@ export function ResourceItem({
   onClick,
 }: ResourceItemProps) {
   useResource(url);
-  const to = url.replace("https://api.github.com/repos", "");
+  const { owner, repository, type, number } = parseUrl(url);
+  const to = `${owner}/${repository}/${type}/${number}`;
   return (
     <div>
       <a

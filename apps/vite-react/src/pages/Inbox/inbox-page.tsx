@@ -1,4 +1,5 @@
-import { InboxComponent, LayoutComponent } from "./inbox.component";
+import { InboxComponent } from "./inbox.component";
+import { LayoutComponent } from "./layout.component";
 import { InboxContextProvider } from "./inbox.context";
 
 export function InboxPage() {

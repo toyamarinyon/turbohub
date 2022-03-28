@@ -2,7 +2,6 @@ import { createContext, useRef } from "react";
 import { useNavigate, useMatchRoute, Outlet } from "@tanstack/react-location";
 import useSWR from "swr";
 import z from "zod";
-import cn from "classnames";
 import { notification } from "@turbohub/github/zodScheme";
 import { gitHubRestApiFetcher } from "../../lib/fetcher";
 import { LocationGenerics } from "../../App";
