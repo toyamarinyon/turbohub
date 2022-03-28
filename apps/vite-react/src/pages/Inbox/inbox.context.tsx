@@ -13,12 +13,12 @@ export const InboxContext = createContext<{
   notifications: z.infer<typeof notificationsScheme>;
   onNotificationClick: (linkTo: string) => void;
   showDetail: boolean;
-  outlet: typeof Outlet;
+  Outlet: typeof Outlet;
 }>({
   notifications: [],
   onNotificationClick: () => {},
   showDetail: false,
-  outlet: Outlet,
+  Outlet: Outlet,
 });
 
 export function InboxContextProvider({
@@ -50,7 +50,7 @@ export function InboxContextProvider({
         },
         showDetail:
           matchRoute({ to: ":owner/:repo/issues/:issueNumber" }) != null,
-        outlet: Outlet,
+        Outlet,
       }}
     >
       {children}

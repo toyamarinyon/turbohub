@@ -1,27 +1,46 @@
 import { useContext, useRef, useState } from "react";
 import cn from "classnames";
-import { Notification } from "../../components/Notification";
 import { InboxContext } from "./inbox.context";
+import { ResourceItem } from "./resource-list/resource-item.component";
+import { DiscussionItem } from "./resource-list/discussion.component";
 
 export function InboxComponent() {
   const { notifications, onNotificationClick } = useContext(InboxContext);
   return (
     <div className="relative">
       <section className="divide-y divide-dashed">
-        {notifications.map((notification) => (
-          <Notification
-            key={notification.id}
-            notification={notification}
-            onClick={(linkTo) => onNotificationClick(linkTo)}
-          />
-        ))}
+        {notifications.map((notification) =>
+          // <Notification
+          //   key={notification.id}
+          //   notification={notification}
+          //   onClick={(linkTo) => onNotificationClick(linkTo)}
+          // />
+          notification.subject.url == null ? (
+            <DiscussionItem
+              key={notification.id}
+              title={notification.subject.title}
+              repositoryFullName={notification.repository.full_name}
+              updatedAtString={notification.updated_at}
+              onClick={onNotificationClick}
+            />
+          ) : (
+            <ResourceItem
+              key={notification.id}
+              url={notification.subject.url}
+              title={notification.subject.title}
+              repositoryFullName={notification.repository.full_name}
+              updatedAtString={notification.updated_at}
+              onClick={onNotificationClick}
+            />
+          )
+        )}
       </section>
     </div>
   );
 }
 
 export function LayoutComponent({ children }: { children: React.ReactNode }) {
-  const { showDetail, outlet } = useContext(InboxContext);
+  const { showDetail, Outlet } = useContext(InboxContext);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollY, setScrollY] = useState(0);
   return (
@@ -44,7 +63,7 @@ export function LayoutComponent({ children }: { children: React.ReactNode }) {
           className="absolute h-full bg-white w-full"
           style={{ top: `${scrollY}px` }}
         >
-          {outlet}
+          <Outlet />
         </div>
       )}
     </div>
