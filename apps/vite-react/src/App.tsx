@@ -8,7 +8,7 @@ import {
 import { ReactLocationDevtools } from "@tanstack/react-location-devtools";
 import { client } from "./lib/urql";
 import "./index.css";
-import { Inbox } from "./pages/Inbox";
+import { InboxPage } from "./pages/Inbox/inbox-page";
 import { ShowIssue } from "./pages/issues/show";
 
 export type LocationGenerics = MakeGenerics<{
@@ -29,7 +29,7 @@ function App() {
         routes={[
           {
             path: "/inbox",
-            element: <Inbox />,
+            element: <InboxPage />,
             children: [
               {
                 path: ":owner/:repo/issues/:issueNumber",
