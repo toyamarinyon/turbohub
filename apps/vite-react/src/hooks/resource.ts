@@ -12,9 +12,12 @@ export function useResource(url: string) {
   });
   const { owner, repository, type, number } = parseUrl(url);
   const { data: issueData, error: issueError } = useSWR(
-    {
-      url: `https://api.github.com/repos/${owner}/${repository}/${type}/${number}`,
-    },
+    () =>
+      type === "discussions"
+        ? null
+        : {
+            url: `https://api.github.com/repos/${owner}/${repository}/${type}/${number}`,
+          },
     gitHubRestApiFetcher(issue)
   );
   return {
