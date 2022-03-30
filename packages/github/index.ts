@@ -1,3 +1,3 @@
 export * from "./src/url";
-export * from "./graphql-operations";
+export * from "./src/graphqlClient";
 export * from "./zodScheme";

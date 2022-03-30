@@ -4,23 +4,17 @@ import { ResourceItem } from "./resource-list/resource-item.component";
 import { DiscussionItem } from "./resource-list/discussion.component";
 
 export function InboxComponent() {
-  const { notifications, onNotificationClick } = useContext(InboxContext);
+  const { notifications, onResourceClick: onNotificationClick } = useContext(InboxContext);
   return (
     <div className="relative">
       <section className="divide-y divide-dashed">
         {notifications.map((notification) =>
-          // <Notification
-          //   key={notification.id}
-          //   notification={notification}
-          //   onClick={(linkTo) => onNotificationClick(linkTo)}
-          // />
           notification.subject.url == null ? (
             <DiscussionItem
               key={notification.id}
               title={notification.subject.title}
               repositoryFullName={notification.repository.full_name}
               updatedAtString={notification.updated_at}
-              onClick={onNotificationClick}
             />
           ) : (
             <ResourceItem
@@ -29,7 +23,6 @@ export function InboxComponent() {
               title={notification.subject.title}
               repositoryFullName={notification.repository.full_name}
               updatedAtString={notification.updated_at}
-              onClick={onNotificationClick}
             />
           )
         )}
@@ -37,5 +30,3 @@ export function InboxComponent() {
     </div>
   );
 }
-
-

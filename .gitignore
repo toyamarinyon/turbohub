@@ -35,4 +35,5 @@ yarn-error.log*
 
 # scheme
 packages/github/scheme.json
-packages/github/graphql-operations.ts
+packages/github/graphql-request-sdk.ts
+packages/github/typed-document-node.ts

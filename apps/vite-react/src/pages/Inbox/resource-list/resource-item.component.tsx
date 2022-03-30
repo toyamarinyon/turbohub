@@ -1,22 +1,20 @@
 import { parseUrl } from "@turbohub/github";
-import { useResource } from "../../../hooks/resource";
-
+import { useContext } from "react";
+import { InboxContext } from "../inbox.context";
 export interface ResourceItemProps {
   url: string;
   repositoryFullName: string;
   title: string;
   updatedAtString: string;
-  onClick: (to: string) => void;
 }
 export function ResourceItem({
   url,
   title,
   repositoryFullName,
   updatedAtString,
-  onClick,
 }: ResourceItemProps) {
-  useResource(url);
   const { owner, repository, type, number } = parseUrl(url);
+  const { onResourceClick: onNotificationClick, onResourceHover: onNotificationHover } = useContext(InboxContext);
   const to = `${owner}/${repository}/${type}/${number}`;
   return (
     <div>
@@ -25,7 +23,10 @@ export function ResourceItem({
         href={to}
         onClick={(e) => {
           e.preventDefault();
-          onClick(to);
+          onNotificationClick(to);
+        }}
+        onMouseEnter={() => {
+          onNotificationHover(to);
         }}
       >
         <div className="flex flex-1 space-x-4">

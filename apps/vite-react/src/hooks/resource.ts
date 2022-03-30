@@ -1,27 +1,46 @@
 import { useQuery } from "urql";
-import useSWR from "swr";
-import { gitHubRestApiFetcher } from "../lib/fetcher";
-import { issue, ResourceDocument, parseUrl } from "@turbohub/github";
+import { IssueDocument } from "@turbohub/github/typed-document-node";
 
-export function useResource(url: string) {
-  useQuery({
-    query: ResourceDocument,
+// type FetchType = "NOW" | "PREFETCH";
+// export function useResource(url: string, fetchType: FetchType = "NOW") {
+//   const [prefetch, setPrefetch] = useState(false);
+//   useQuery({
+//     query: ResourceDocument,
+//     variables: {
+//       url,
+//     },
+//   });
+//   const { owner, repository, type, number } = parseUrl(url);
+//   const { data: issueData, error: issueError } = useSWR(
+//     () =>
+//       type === "discussions"
+//         ? null
+//         : {
+//             url: `https://api.github.com/repos/${owner}/${repository}/${type}/${number}`,
+//           },
+//     gitHubRestApiFetcher(issue)
+//   );
+//   function prefetch() {}
+//   return {
+//     issueData,
+//     issueError,
+//   };
+// }
+
+interface ResourceIdentifier {
+  owner: string;
+  repository: string;
+  number: number;
+}
+
+export function useIssue({ owner, repository, number }: ResourceIdentifier) {
+  const [result] = useQuery({
+    query: IssueDocument,
     variables: {
-      url,
+      owner,
+      repository,
+      number,
     },
   });
-  const { owner, repository, type, number } = parseUrl(url);
-  const { data: issueData, error: issueError } = useSWR(
-    () =>
-      type === "discussions"
-        ? null
-        : {
-            url: `https://api.github.com/repos/${owner}/${repository}/${type}/${number}`,
-          },
-    gitHubRestApiFetcher(issue)
-  );
-  return {
-    issueData,
-    issueError,
-  };
+  return [result];
 }

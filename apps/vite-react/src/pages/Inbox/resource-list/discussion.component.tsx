@@ -1,19 +1,17 @@
 import { parseISO, add, sub } from "date-fns";
 import { useQuery } from "urql";
-import { DiscussionSearchDocument } from "@turbohub/github";
+import { DiscussionSearchDocument } from "@turbohub/github/typed-document-node";
 import { ResourceItem } from "./resource-item.component";
 
 interface DiscussionItemProps {
   repositoryFullName: string;
   title: string;
   updatedAtString: string;
-  onClick: (to: string) => void;
 }
 export function DiscussionItem({
   title,
   repositoryFullName,
   updatedAtString,
-  onClick,
 }: DiscussionItemProps) {
   const updatedAt = parseISO(updatedAtString);
   const [result] = useQuery({
@@ -51,7 +49,6 @@ export function DiscussionItem({
       title={title}
       repositoryFullName={repositoryFullName}
       updatedAtString={updatedAtString}
-      onClick={onClick}
     />
   );
 }

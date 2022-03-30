@@ -1,28 +1,29 @@
 import { useMatch } from "@tanstack/react-location";
-import { issue } from "@turbohub/github/zodScheme";
-import useSWR from "swr";
 import { LocationGenerics } from "../../App";
-import { gitHubRestApiFetcher } from "../../lib/fetcher";
+import { useIssue } from "../../hooks/resource";
 export function ShowIssue() {
   const {
     params: { owner, repo, issueNumber },
   } = useMatch<LocationGenerics>();
-  const { data, error } = useSWR(
-    {
-      url: `https://api.github.com/repos/${owner}/${repo}/issues/${issueNumber}`,
-    },
-    gitHubRestApiFetcher(issue)
-  );
-  if (data == null) {
+  const [result] = useIssue({
+    owner,
+    repository: repo,
+    number: parseInt(issueNumber),
+  });
+  if (result.fetching) {
     return <div>"loading"</div>;
   }
   return (
     <article className="bg-white h-full">
       <header>
-        <h1 className="text-2xl">{data.title}</h1>
+        <h1 className="text-2xl">{result.data?.repository?.issue?.title}</h1>
       </header>
       <section>
-        <div>{data.body}</div>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: result.data?.repository?.issue?.bodyHTML,
+          }}
+        ></div>
       </section>
     </article>
   );

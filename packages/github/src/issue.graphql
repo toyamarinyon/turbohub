@@ -1,28 +1,8 @@
-query Resource($url: URI!) {
-  resource(url: $url) {
-    ... on PullRequest {
-      id
+query Issue($owner: String!, $repository: String!, $number: Int!) {
+  repository(owner: $owner, name: $repository) {
+    issue(number: $number) {
       title
       bodyHTML
-      repository {
-        id
-        name
-        owner {
-          login
-        }
-      }
-    }
-    ... on Issue {
-      id
-      title
-      bodyHTML
-      repository {
-        id
-        name
-        owner {
-          login
-        }
-      }
     }
   }
 }
