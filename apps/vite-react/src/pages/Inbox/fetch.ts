@@ -9,12 +9,19 @@ import { z } from "zod";
 /**
  * List notifications REST API has a problem with the URL of the discussion being empty.
  * So if the URL of the discussion is null, we get it with the search query of GraphQL API and replace the response of REST API.
- * 
+ *
  * Also, check out {@link https://docs.github.com/en/rest/reference/activity#list-notifications-for-the-authenticated-user the reference of the list notifications} and
  * {@link https://docs.github.com/en/graphql/reference/queries#searchresultitemconnection the reference of the search query}
  */
-export async function fetchNotification() {
-  return fetch("https://api.github.com/notifications", {
+export async function fetchNotification({
+  query,
+}: {
+  query?: Record<string, string>;
+}) {
+  const url = new URL("https://api.github.com/notifications");
+  url.search = new URLSearchParams(query).toString();
+
+  return fetch(url.toString(), {
     headers: {
       Accept: "application/vnd.github.v3+json",
       Authorization: `bearer ${

@@ -5,6 +5,7 @@ import z from "zod";
 import { notificationScheme } from "@turbohub/github/zodScheme";
 import { LocationGenerics } from "../../App";
 import { fetchNotification } from "./fetch";
+import { Prefetch } from "./prefetch/prefech.component";
 
 const notificationsScheme = z.array(notificationScheme);
 
@@ -61,7 +62,7 @@ export function InboxContextProvider({
       {children}
       <div>
         {prefetchUrls.map((prefetchUrl) => (
-          <p>{prefetchUrl}</p>
+          <Prefetch url={prefetchUrl} key={prefetchUrl}/>
         ))}
       </div>
     </InboxContext.Provider>

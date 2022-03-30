@@ -27,7 +27,7 @@ import { IssueDocument } from "@turbohub/github/typed-document-node";
 //   };
 // }
 
-interface ResourceIdentifier {
+export interface ResourceIdentifier {
   owner: string;
   repository: string;
   number: number;

@@ -31,3 +31,13 @@ test("works properly with commit url", () => {
   expect(type).toBe("commits");
   expect(number).toBe("e71fa4969770726a38397821ba5b68727d70642e");
 });
+
+test("works properly with relative url", () => {
+  const url =
+    "toyamarinyon/slidev-theme-sat0shi/commits/e71fa4969770726a38397821ba5b68727d70642e";
+  const { owner, repository, type, number } = parseUrl(url);
+  expect(owner).toBe("toyamarinyon");
+  expect(repository).toBe("slidev-theme-sat0shi");
+  expect(type).toBe("commits");
+  expect(number).toBe("e71fa4969770726a38397821ba5b68727d70642e");
+});
