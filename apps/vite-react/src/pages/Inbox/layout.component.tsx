@@ -24,7 +24,7 @@ export function LayoutComponent({ children }: { children: React.ReactNode; }) {
       {children}
       {showDetail && (
         <div
-          className="absolute h-full bg-white w-full"
+          className="absolute h-full bg-white w-full overflow-scroll"
           style={{ top: `${scrollY}px` }}
         >
           <Outlet />
