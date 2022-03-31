@@ -9,7 +9,7 @@ import { ReactLocationDevtools } from "@tanstack/react-location-devtools";
 import { client } from "./lib/urql";
 import "./index.css";
 import { InboxPage } from "./pages/Inbox/inbox-page";
-import { ShowIssue } from "./pages/issues/show";
+import { ShowPage } from "./pages/resources/issues/show-page";
 
 export type LocationGenerics = MakeGenerics<{
   Params: {
@@ -33,18 +33,18 @@ function App() {
             children: [
               {
                 path: ":owner/:repo/issues/:issueNumber",
-                element: <ShowIssue />,
+                element: <ShowPage />,
               },
             ],
           },
         ]}
       >
-        <div className="px-2 divide-y divide-gray-200 h-screen flex flex-col">
-          <header className="flex py-2">
+        <div className="divide-y divide-gray-200 h-screen flex flex-col">
+          <header className="flex py-2 px-4">
             <h1 className="text-3xl font-black">TURBOHUB</h1>
           </header>
-          <div className="flex flex-1 overflow-hidden">
-            <ul className="w-72">
+          <div className="flex flex-1 overflow-hidden px-4">
+            <ul className="w-72 px-4 pt-8 text-xl">
               <li>Inbox</li>
             </ul>
 

@@ -34,6 +34,7 @@ export function InboxContextProvider({
       query: {
         all: true,
         per_page: 10,
+        query: "is:done",
       },
     },
     fetchNotification
