@@ -3,6 +3,18 @@ query Issue($owner: String!, $repository: String!, $number: Int!) {
     issue(number: $number) {
       title
       bodyHTML
+      comments(last: 5) {
+        edges {
+          cursor
+          node {
+            author {
+              login
+            }
+            bodyHTML
+            createdAt
+          }
+        }
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 import { useMatch } from "@tanstack/react-location";
 import { LocationGenerics } from "../../App";
 import { useIssue } from "../../hooks/resource";
+
 export function ShowIssue() {
   const {
     params: { owner, repo, issueNumber },
@@ -24,6 +25,14 @@ export function ShowIssue() {
             __html: result.data?.repository?.issue?.bodyHTML,
           }}
         ></div>
+      </section>
+      <section>
+        {result.data?.repository?.issue?.comments.edges?.map((edge) => (
+          <article key={edge?.cursor}>
+            {edge?.node?.author?.login}
+            <div dangerouslySetInnerHTML={{__html:edge?.node?.bodyHTML }}></div>
+          </article>
+        ))}
       </section>
     </article>
   );
