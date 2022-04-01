@@ -1,5 +1,7 @@
 import { useMatch } from "@tanstack/react-location";
 import { AllowLeft } from "@turbohub/icon";
+import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { useContext } from "react";
 import { LocationGenerics } from "../../../App";
 import { useIssue } from "../../../hooks/resource";
@@ -15,12 +17,43 @@ export function ShowIssue() {
     repository: repo,
     number: parseInt(issueNumber),
   });
+  const [isHeaderIntersecting, setIsHeaderIntersecting] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (
+      scrollContainerRef.current == null ||
+      headerRef.current == null ||
+      result.fetching
+    ) {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        setIsHeaderIntersecting(entry.isIntersecting);
+      },
+      {
+        root: scrollContainerRef.current,
+        rootMargin: "24px",
+        threshold: 0.1,
+      }
+    );
+    if (headerRef.current) {
+      observer.observe(headerRef.current);
+    }
+    return () => {
+      if (headerRef.current) {
+        observer.unobserve(headerRef.current);
+      }
+    };
+  }, [scrollContainerRef, headerRef, result]);
   if (result.fetching) {
     return <div>"loading"</div>;
   }
   return (
-    <section className="divide-y">
-      <nav className="py-2 px-2 flex items-center">
+    <section className="flex flex-col w-full overflow-hidden h-full relative">
+      <nav className="py-2 px-2 flex items-center border-b">
         <div className="w-16">
           <button
             type="button"
@@ -30,9 +63,17 @@ export function ShowIssue() {
             <AllowLeft />
           </button>
         </div>
+        <ul>
+          <li>
+            <button>archive</button>
+          </li>
+        </ul>
       </nav>
-      <div className="bg-white h-full">
-        <div className="pl-16 mt-6">
+      <div
+        className="bg-white h-full overflow-y-scroll"
+        ref={scrollContainerRef}
+      >
+        <div className="pl-16 mt-6" ref={headerRef}>
           <header>
             <h2>
               {result.data?.repository?.owner.login}/
@@ -78,6 +119,17 @@ export function ShowIssue() {
           ))}
         </div>
       </div>
+      {!isHeaderIntersecting && (
+        <div className="absolute top-10 p-2 bg-white border-b border-t w-full">
+          <header>
+            <h2 className="text-sm">
+              {result.data?.repository?.owner.login}/
+              {result.data?.repository?.name}
+            </h2>
+            <h1 className="text-md">{result.data?.repository?.issue?.title}</h1>
+          </header>
+        </div>
+      )}
     </section>
   );
 }
