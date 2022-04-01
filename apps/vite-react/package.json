@@ -24,6 +24,7 @@
   "devDependencies": {
     "@tanstack/react-location": "^3.7.4",
     "@tanstack/react-location-devtools": "^3.4.4",
+    "@turbohub/dexie": "*",
     "@turbohub/github": "*",
     "@turbohub/icon": "*",
     "@types/react": "^17.0.33",

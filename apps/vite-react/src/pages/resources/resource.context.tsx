@@ -2,8 +2,10 @@ import { createContext } from "react";
 
 export const ResourceContext = createContext<{
   onBackButtonClick: () => void;
+  onArchiveButtonClick: () => void;
 }>({
   onBackButtonClick: () => {},
+  onArchiveButtonClick: () => {},
 });
 
 export function ResourceContextProvider({
@@ -15,9 +17,9 @@ export function ResourceContextProvider({
     <ResourceContext.Provider
       value={{
         onBackButtonClick: () => {
-          console.log('hello')
           history.back();
         },
+        onArchiveButtonClick: () => {},
       }}
     >
       {children}
