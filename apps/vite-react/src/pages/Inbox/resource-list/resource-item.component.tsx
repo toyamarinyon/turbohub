@@ -20,7 +20,7 @@ export function ResourceItem({
     onResourceClick: onNotificationClick,
     onResourceHover: onNotificationHover,
   } = useContext(InboxContext);
-  const to = `t/${threadId}`;
+  const to = `/t/${threadId}`;
   const prefetchUrl = `${owner}/${repository}/${type}/${number}`;
   return (
     <div>

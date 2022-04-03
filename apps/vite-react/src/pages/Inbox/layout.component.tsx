@@ -1,35 +1,28 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useRef } from "react";
 import cn from "classnames";
-import { InboxContext } from "./inbox.context";
+import { ScrollPositionContext } from "../../context/scrollPosition.context";
+import { useEffect } from "react";
 
-
-export function LayoutComponent({ children }: { children: React.ReactNode; }) {
-  const { showDetail, Outlet } = useContext(InboxContext);
+export function LayoutComponent({ children }: { children: React.ReactNode }) {
+  const { inboxPosition, setInboxPosition } = useContext(ScrollPositionContext);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [scrollY, setScrollY] = useState(0);
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = inboxPosition;
+    }
+  }, []);
   return (
     <div
-      className={cn("px-1 flex-1 relative", {
-        "overflow-scroll": !showDetail,
-        "overflow-hidden": showDetail,
-      })}
+      className={cn("px-1 flex-1 relative overflow-scroll")}
       onScroll={() => {
         if (scrollContainerRef.current == null) {
           return;
         }
-        setScrollY(scrollContainerRef.current.scrollTop);
+        setInboxPosition(scrollContainerRef.current.scrollTop);
       }}
       ref={scrollContainerRef}
     >
       {children}
-      {showDetail && (
-        <div
-          className="absolute h-full bg-white w-full"
-          style={{ top: `${scrollY}px` }}
-        >
-          <Outlet />
-        </div>
-      )}
     </div>
   );
 }
