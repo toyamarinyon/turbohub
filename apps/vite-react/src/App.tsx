@@ -9,9 +9,9 @@ import { ReactLocationDevtools } from "@tanstack/react-location-devtools";
 import { client } from "./lib/urql";
 import "./index.css";
 import { InboxPage } from "./pages/Inbox/inbox-page";
-import { ShowPage } from "./pages/resources/issues/show-page";
 import { DexiePlaygroundListPage } from "./pages/dev/dexie-playground/list-page";
 import { DexiePlaygroundShowPage } from "./pages/dev/dexie-playground/show-page";
+import { ThreadPage } from "./pages/threads/thread-page";
 
 export type LocationGenerics = MakeGenerics<{
   Params: {
@@ -32,12 +32,8 @@ function App() {
             element: <InboxPage />,
             children: [
               {
-                path: ":owner/:repo/issues/:issueNumber",
-                element: <ShowPage />,
-              },
-              {
                 path: "t/:threadId",
-                element: <ShowPage />,
+                element: <ThreadPage />,
               },
             ],
           },

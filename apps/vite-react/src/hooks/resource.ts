@@ -1,5 +1,8 @@
 import { useQuery } from "urql";
-import { IssueDocument } from "@turbohub/github/typed-document-node";
+import {
+  IssueDocument,
+  PullRequestDocument,
+} from "@turbohub/github/typed-document-node";
 
 // type FetchType = "NOW" | "PREFETCH";
 // export function useResource(url: string, fetchType: FetchType = "NOW") {
@@ -36,6 +39,22 @@ export interface ResourceIdentifier {
 export function useIssue({ owner, repository, number }: ResourceIdentifier) {
   const [result] = useQuery({
     query: IssueDocument,
+    variables: {
+      owner,
+      repository,
+      number,
+    },
+  });
+  return [result];
+}
+
+export function usePullRequest({
+  owner,
+  repository,
+  number,
+}: ResourceIdentifier) {
+  const [result] = useQuery({
+    query: PullRequestDocument,
     variables: {
       owner,
       repository,

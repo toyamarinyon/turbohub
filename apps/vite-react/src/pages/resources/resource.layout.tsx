@@ -1,6 +1,7 @@
-import { useRef, useEffect, useState, useContext, ReactElement } from "react";
+import { useContext, ReactElement } from "react";
 import { AllowLeft } from "@turbohub/icon";
 import { ResourceContext } from "./resource.context";
+import { useInView } from "react-intersection-observer";
 
 export function ResourceLayoutComponent({
   children,
@@ -12,33 +13,10 @@ export function ResourceLayoutComponent({
   StickyHeader: () => ReactElement;
 }) {
   const { onBackButtonClick } = useContext(ResourceContext);
-  const [isHeaderIntersection, setIsHeaderIntersection] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (scrollContainerRef.current == null || headerRef.current == null) {
-      return;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        setIsHeaderIntersection(entry.isIntersecting);
-      },
-      {
-        root: scrollContainerRef.current,
-        rootMargin: "24px",
-        threshold: 0.1,
-      }
-    );
-    if (headerRef.current) {
-      observer.observe(headerRef.current);
-    }
-    return () => {
-      if (headerRef.current) {
-        observer.unobserve(headerRef.current);
-      }
-    };
-  }, [scrollContainerRef, headerRef]);
+  const { ref, inView } = useInView({
+    rootMargin: "24px",
+    threshold: 0.1,
+  });
 
   return (
     <section className="flex flex-col w-full overflow-hidden h-full relative">
@@ -58,16 +36,13 @@ export function ResourceLayoutComponent({
           </li>
         </ul>
       </nav>
-      <div
-        className="bg-white h-full overflow-y-scroll"
-        ref={scrollContainerRef}
-      >
-        <div className="pl-16 mt-6" ref={headerRef}>
+      <div className="bg-white h-full overflow-y-scroll">
+        <div className="pl-16 mt-6" ref={ref}>
           <Header />
         </div>
         {children}
       </div>
-      {!isHeaderIntersection && (
+      {!inView && (
         <div className="absolute top-10 p-2 bg-white border-b border-t w-full">
           <StickyHeader />
         </div>

@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { useContext } from "react";
 import { ResourceContext } from "../resource.context";
 import { useIssue } from "../../../hooks/resource";
-import { IssueQuery } from "@turbohub/github/graphql-request-sdk";
+import { IssueQuery } from "@turbohub/github/typed-document-node";
 
 export const IssueContext = createContext<{
   issue: IssueQuery;
@@ -17,7 +17,7 @@ export function IssueContextProvider({
 }) {
   const { owner, repository, number } = useContext(ResourceContext);
 
-  const [result] = useIssue({ owner, repository, number: number });
+  const [result] = useIssue({ owner, repository, number });
 
   if (result.fetching) {
     return <div>loading</div>;

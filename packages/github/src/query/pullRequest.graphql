@@ -1,0 +1,27 @@
+query PullRequest($owner: String!, $repository: String!, $number: Int!) {
+  repository(owner: $owner, name: $repository) {
+    name
+    owner {
+      login
+    }
+    pullRequest(number: $number) {
+      author {
+        login
+      }
+      title
+      bodyHTML
+      comments(last: 5) {
+        edges {
+          cursor
+          node {
+            author {
+              login
+            }
+            bodyHTML
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
