@@ -16,8 +16,12 @@ export function ResourceItem({
   updatedAtString,
 }: ResourceItemProps) {
   const { owner, repository, type, number } = parseUrl(url);
-  const { onResourceClick: onNotificationClick, onResourceHover: onNotificationHover } = useContext(InboxContext);
+  const {
+    onResourceClick: onNotificationClick,
+    onResourceHover: onNotificationHover,
+  } = useContext(InboxContext);
   const to = `t/${threadId}`;
+  const prefetchUrl = `${owner}/${repository}/${type}/${number}`;
   return (
     <div>
       <a
@@ -28,7 +32,7 @@ export function ResourceItem({
           onNotificationClick(to);
         }}
         onMouseEnter={() => {
-          onNotificationHover(to);
+          onNotificationHover(prefetchUrl);
         }}
       >
         <div className="flex flex-1 space-x-4">

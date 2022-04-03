@@ -4,11 +4,13 @@ import { DiscussionSearchDocument } from "@turbohub/github/typed-document-node";
 import { ResourceItem } from "./resource-item.component";
 
 interface DiscussionItemProps {
+  threadId: number;
   repositoryFullName: string;
   title: string;
   updatedAtString: string;
 }
 export function DiscussionItem({
+  threadId,
   title,
   repositoryFullName,
   updatedAtString,
@@ -45,6 +47,7 @@ export function DiscussionItem({
 
   return (
     <ResourceItem
+      threadId={threadId}
       url={node.url}
       title={title}
       repositoryFullName={repositoryFullName}
