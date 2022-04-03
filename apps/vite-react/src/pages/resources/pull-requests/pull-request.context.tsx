@@ -4,9 +4,9 @@ import { ResourceContext } from "../resource.context";
 import { usePullRequest } from "../../../hooks/resource";
 
 export const PullRequestContext = createContext<{
-  pullRequest: PullRequestQuery;
+  pullRequestQuery: PullRequestQuery;
 }>({
-  pullRequest: {},
+  pullRequestQuery: {},
 });
 
 export function PullRequestContextProvider({
@@ -26,7 +26,7 @@ export function PullRequestContextProvider({
   return (
     <PullRequestContext.Provider
       value={{
-        pullRequest: result.data,
+        pullRequestQuery: result.data,
       }}
     >
       {children}
