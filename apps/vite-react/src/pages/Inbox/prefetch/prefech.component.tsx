@@ -7,7 +7,6 @@ import {
 
 export function Prefetch({ url }: { url: string }) {
   const { owner, repository, type, number } = parseUrl(url);
-  console.log(url)
   if (type === "issues") {
     return (
       <PrefetchIssue owner={owner} repository={repository} number={number} />
@@ -27,7 +26,7 @@ export function Prefetch({ url }: { url: string }) {
 
 function PrefetchIssue({ owner, repository, number }: ResourceIdentifier) {
   useIssue({ owner, repository, number });
-  return <div>issue</div>;
+  return <div></div>;
 }
 
 function PrefetchPullRequest({
