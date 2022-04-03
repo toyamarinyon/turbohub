@@ -38,7 +38,7 @@ export function ResourceContent({
       <div className="flex-1 mt-2 relative divide-y">
         <article className="relative pl-16 py-4">
           <header className="mb-1">
-            <h1>{repository.owner.login}</h1>
+            <h1>{content?.author?.login}</h1>
           </header>
           <section className="text-sm">
             <div

@@ -12,6 +12,7 @@ export function ShowPullRequest() {
   }
   const { name, owner } = pullRequestQuery.repository;
   const { pullRequest } = pullRequestQuery.repository;
+  
   return (
     <ResourceContent
       repository={{ name, owner }}
