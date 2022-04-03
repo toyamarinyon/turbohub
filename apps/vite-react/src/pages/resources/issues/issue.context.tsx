@@ -5,9 +5,9 @@ import { useIssue } from "../../../hooks/resource";
 import { IssueQuery } from "@turbohub/github/typed-document-node";
 
 export const IssueContext = createContext<{
-  issue: IssueQuery;
+  issueQuery: IssueQuery;
 }>({
-  issue: {},
+  issueQuery: {},
 });
 
 export function IssueContextProvider({
@@ -28,7 +28,7 @@ export function IssueContextProvider({
   return (
     <IssueContext.Provider
       value={{
-        issue: result.data,
+        issueQuery: result.data,
       }}
     >
       {children}

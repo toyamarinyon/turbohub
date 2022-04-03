@@ -1,25 +1,12 @@
 query Issue($owner: String!, $repository: String!, $number: Int!) {
   repository(owner: $owner, name: $repository) {
-    name
-    owner {
-      login
-    }
+    ...RepositoryGlance
     issue(number: $number) {
-      author {
-        login
-      }
       title
-      bodyHTML
+      ...ContentGlance
       comments(last: 5) {
-        edges {
-          cursor
-          node {
-            author {
-              login
-            }
-            bodyHTML
-            createdAt
-          }
+        nodes {
+          ...ContentGlance
         }
       }
     }
