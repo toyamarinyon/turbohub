@@ -4,7 +4,8 @@ import { ResourceItem } from "./resource-list/resource-item.component";
 import { DiscussionItem } from "./resource-list/discussion.component";
 
 export function InboxComponent() {
-  const { notifications, onResourceClick: onNotificationClick } = useContext(InboxContext);
+  const { notifications, onResourceClick: onNotificationClick } =
+    useContext(InboxContext);
   return (
     <div className="relative">
       <section className="divide-y divide-dashed">
@@ -18,6 +19,7 @@ export function InboxComponent() {
             />
           ) : (
             <ResourceItem
+              threadId={parseInt(notification.id)}
               key={notification.id}
               url={notification.subject.url}
               title={notification.subject.title}

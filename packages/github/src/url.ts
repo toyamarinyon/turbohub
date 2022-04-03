@@ -2,7 +2,7 @@ interface RepositoryPath {
   owner: string;
   repository: string;
   type: string;
-  number: string;
+  number: number;
 }
 export function parseUrl(url: string): RepositoryPath {
   const paths = url
@@ -13,6 +13,6 @@ export function parseUrl(url: string): RepositoryPath {
     owner,
     repository,
     type,
-    number,
+    number: parseInt(number),
   };
 }

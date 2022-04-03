@@ -2,12 +2,14 @@ import { parseUrl } from "@turbohub/github";
 import { useContext } from "react";
 import { InboxContext } from "../inbox.context";
 export interface ResourceItemProps {
+  threadId: number;
   url: string;
   repositoryFullName: string;
   title: string;
   updatedAtString: string;
 }
 export function ResourceItem({
+  threadId,
   url,
   title,
   repositoryFullName,
@@ -15,7 +17,7 @@ export function ResourceItem({
 }: ResourceItemProps) {
   const { owner, repository, type, number } = parseUrl(url);
   const { onResourceClick: onNotificationClick, onResourceHover: onNotificationHover } = useContext(InboxContext);
-  const to = `${owner}/${repository}/${type}/${number}`;
+  const to = `t/${threadId}`;
   return (
     <div>
       <a

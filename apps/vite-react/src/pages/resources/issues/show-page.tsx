@@ -1,10 +1,13 @@
 import { ResourceContextProvider } from "../resource.context";
-import { ShowIssue } from "./show..component";
+import { IssueContextProvider } from "./issue.context";
+import { ShowIssue } from "./show.component";
 
 export function ShowPage() {
   return (
     <ResourceContextProvider>
-      <ShowIssue />
+      <IssueContextProvider>
+        <ShowIssue />
+      </IssueContextProvider>
     </ResourceContextProvider>
   );
 }
