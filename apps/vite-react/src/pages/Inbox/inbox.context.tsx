@@ -48,7 +48,7 @@ export function InboxContextProvider({
       value={{
         notifications: data,
         onResourceClick: (linkTo) => {
-          navigate({ to: `/inbox/${linkTo}` });
+          navigate({ to: `/${linkTo}` });
         },
         onResourceHover: (linkTo) => {
           setPrefetchUrls((prev) => [...new Set([...prev, linkTo])]);
