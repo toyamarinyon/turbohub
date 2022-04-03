@@ -6,6 +6,7 @@
 query discussionSearch($query: String!) {
   search(query: $query, type: DISCUSSION, first: 1) {
     nodes {
+      __typename
       ... on Discussion {
         id
         title

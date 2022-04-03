@@ -1,9 +1,9 @@
 {
   "name": "@turbohub/github",
   "version": "0.0.0",
-  "main": "graphql-operations.ts",
+  "main": "index.ts",
   "files": [
-    "zodScheme.ts"
+    "typed-document-node.ts"
   ],
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,9 @@
     "build": "run-s download codegen",
     "watch": "yarn codegen --watch",
     "dev": "run-s download watch",
-    "download": "./download_query"
+    "download": "./download_query",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.2",
@@ -23,6 +25,13 @@
     "npm-run-all": "^4.1.5",
     "tslib": "^2.3.1",
     "typescript": "^4.6.2",
+    "vitest": "^0.7.12",
     "zod": "^3.14.2"
+  },
+  "dependencies": {
+    "@graphql-codegen/typescript-graphql-request": "^4.4.4",
+    "@turbohub/dexie": "*",
+    "graphql": "^16.3.0",
+    "graphql-request": "^4.2.0"
   }
 }

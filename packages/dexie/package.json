@@ -1,0 +1,10 @@
+{
+  "name": "@turbohub/dexie",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "author": "@toyamarinyon",
+  "license": "MIT",
+  "dependencies": {
+    "dexie": "^3.2.1"
+  }
+}

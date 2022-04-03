@@ -1,9 +1,23 @@
 import { Provider } from "urql";
-import { Outlet, ReactLocation, Router } from "@tanstack/react-location";
+import {
+  Outlet,
+  ReactLocation,
+  Router,
+  MakeGenerics,
+} from "@tanstack/react-location";
 import { ReactLocationDevtools } from "@tanstack/react-location-devtools";
 import { client } from "./lib/urql";
 import "./index.css";
-import { Inbox } from "./pages/Inbox";
+import { InboxPage } from "./pages/Inbox/inbox-page";
+import { ShowPage } from "./pages/resources/issues/show-page";
+import { DexiePlaygroundListPage } from "./pages/dev/dexie-playground/list-page";
+import { DexiePlaygroundShowPage } from "./pages/dev/dexie-playground/show-page";
+
+export type LocationGenerics = MakeGenerics<{
+  Params: {
+    threadId: string;
+  };
+}>;
 
 function App() {
   // Set up a ReactLocation instance
@@ -14,23 +28,39 @@ function App() {
         location={location}
         routes={[
           {
-            path: "/",
-            element: <Inbox />,
+            path: "/inbox",
+            element: <InboxPage />,
+            children: [
+              {
+                path: ":owner/:repo/issues/:issueNumber",
+                element: <ShowPage />,
+              },
+              {
+                path: "t/:threadId",
+                element: <ShowPage />,
+              },
+            ],
+          },
+          {
+            path: "/dexie-playground/:threadId",
+            element: <DexiePlaygroundShowPage />,
+          },
+          {
+            path: "/dexie-playground",
+            element: <DexiePlaygroundListPage />,
           },
         ]}
       >
-        <div className="px-2 divide-y divide-gray-200">
-          <header className="flex py-2">
+        <div className="divide-y divide-gray-200 h-screen flex flex-col">
+          <header className="flex py-2 px-4">
             <h1 className="text-3xl font-black">TURBOHUB</h1>
           </header>
-          <div className="flex">
-            <ul className="w-72">
+          <div className="flex flex-1 overflow-hidden px-4">
+            <ul className="w-72 px-4 pt-8 text-xl">
               <li>Inbox</li>
             </ul>
 
-            <div className="px-1 flex-1">
-              <Outlet />
-            </div>
+            <Outlet />
           </div>
           <ReactLocationDevtools initialIsOpen={false} />
         </div>
