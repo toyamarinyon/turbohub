@@ -1,0 +1,14 @@
+query PullRequest($owner: String!, $repository: String!, $number: Int!) {
+  repository(owner: $owner, name: $repository) {
+    ...RepositoryGlance
+    pullRequest(number: $number) {
+      title
+      ...ContentGlance
+      comments(last: 5) {
+        nodes {
+          ...ContentGlance
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+fragment RepositoryGlance on RepositoryInfo {
+  name
+  owner {
+    login
+  }
+}
+
+fragment ContentGlance on Comment {
+  id
+  bodyHTML
+  createdAt
+  author {
+    login
+  }
+}

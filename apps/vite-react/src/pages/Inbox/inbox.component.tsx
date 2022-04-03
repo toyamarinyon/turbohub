@@ -12,6 +12,7 @@ export function InboxComponent() {
         {notifications.map((notification) =>
           notification.subject.url == null ? (
             <DiscussionItem
+              threadId={parseInt(notification.id)}
               key={notification.id}
               title={notification.subject.title}
               repositoryFullName={notification.repository.full_name}

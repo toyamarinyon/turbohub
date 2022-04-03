@@ -1,0 +1,14 @@
+query Issue($owner: String!, $repository: String!, $number: Int!) {
+  repository(owner: $owner, name: $repository) {
+    ...RepositoryGlance
+    issue(number: $number) {
+      title
+      ...ContentGlance
+      comments(last: 5) {
+        nodes {
+          ...ContentGlance
+        }
+      }
+    }
+  }
+}
