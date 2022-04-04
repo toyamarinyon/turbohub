@@ -17,6 +17,7 @@ export function ShowIssue() {
       repository={{ name, owner }}
       content={{
         id: issue.id,
+        number: issue.number,
         createdAt: issue.createdAt,
         title: issue.title,
         bodyHTML: issue.bodyHTML,
