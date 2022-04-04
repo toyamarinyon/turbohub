@@ -1,5 +1,7 @@
 import { parseUrl } from "@turbohub/github";
+import { parseISO } from "date-fns";
 import { useContext } from "react";
+import { relativeTime } from "../../../lib/relativeTime";
 import { InboxContext } from "../inbox.context";
 export interface ResourceItemProps {
   threadId: number;
@@ -40,7 +42,7 @@ export function ResourceItem({
           <h1>{title}</h1>
         </div>
         <div className="flex">
-          <p>{updatedAtString}</p>
+          <p>{relativeTime(parseISO(updatedAtString))}</p>
         </div>
       </a>
     </div>
