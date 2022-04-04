@@ -17,6 +17,7 @@ export function ShowPullRequest() {
     <ResourceContent
       repository={{ name, owner }}
       content={{
+        number: pullRequest.number,
         id: pullRequest.id,
         createdAt: pullRequest.createdAt,
         title: pullRequest.title,

@@ -3,6 +3,7 @@ query Issue($owner: String!, $repository: String!, $number: Int!) {
     ...RepositoryGlance
     issue(number: $number) {
       title
+      number
       ...ContentGlance
       comments(last: 5) {
         nodes {

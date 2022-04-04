@@ -3,6 +3,7 @@ query PullRequest($owner: String!, $repository: String!, $number: Int!) {
     ...RepositoryGlance
     pullRequest(number: $number) {
       title
+      number
       ...ContentGlance
       comments(last: 5) {
         nodes {
