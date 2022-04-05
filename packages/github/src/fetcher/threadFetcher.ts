@@ -21,7 +21,7 @@ export async function threadUrlFetcher({
     },
   })
     .then((res) => res.json())
-    .then(async (json) => threadWithResourceUrl(json));
+    .then(async (json) => threadWithResourceUrl(json, token));
   await db.threadResponseCaches.put({
     threadId,
     url: result.subject.url,

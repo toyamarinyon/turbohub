@@ -13,6 +13,7 @@ import { DexiePlaygroundListPage } from "./pages/dev/dexie-playground/list-page"
 import { DexiePlaygroundShowPage } from "./pages/dev/dexie-playground/show-page";
 import { ThreadPage } from "./pages/threads/thread-page";
 import { ScrollPositionContextProvider } from "./context/scrollPosition.context";
+import { GitHubRestApiPlayground } from "./pages/dev/github-rest";
 
 export type LocationGenerics = MakeGenerics<{
   Params: {
@@ -45,6 +46,10 @@ function App() {
             {
               path: "/dexie-playground",
               element: <DexiePlaygroundListPage />,
+            },
+            {
+              path: "/dev/github-rest-api-playground",
+              element: <GitHubRestApiPlayground />,
             },
           ]}
         >

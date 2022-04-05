@@ -3,7 +3,7 @@ import { parseISO, add, sub } from "date-fns";
 import { nullUrlThreadScheme, githubGraphQLClient } from "../index";
 import { threadScheme } from "./zodScheme";
 
-export async function threadWithResourceUrl(thread: any) {
+export async function threadWithResourceUrl(thread: any, token: string) {
   try {
     return threadScheme.parse(thread);
   } catch (e) {
@@ -12,7 +12,7 @@ export async function threadWithResourceUrl(thread: any) {
     const threadCache = await db.threadResponseCaches.get(
       parseInt(subjectUrlNullableNotification.id)
     );
-    if (threadCache) {
+    if (threadCache != null) {
       threadCache.url;
       const properlyJson = {
         ...subjectUrlNullableNotification,
@@ -27,7 +27,7 @@ export async function threadWithResourceUrl(thread: any) {
 
       const data = await githubGraphQLClient("https://api.github.com/graphql", {
         headers: {
-          Authorization: `bearer ${process.env.GITHUB_PERSONAL_ACCESS_TOKEN}`,
+          Authorization: `bearer ${token}`,
         },
       }).discussionSearch({
         query: `${subjectUrlNullableNotification.subject.title} in:title repo:${
