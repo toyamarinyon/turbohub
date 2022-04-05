@@ -31,7 +31,9 @@ export async function fetchNotification({
         throw new Error("unexpected response");
       }
       return Promise.all(
-        json.map<Promise<z.infer<typeof threadScheme>>>(threadWithResourceUrl)
+        json.map<Promise<z.infer<typeof threadScheme>>>((thread) =>
+          threadWithResourceUrl(thread, token)
+        )
       );
     });
   await db.threadResponseCaches.bulkPut(

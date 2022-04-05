@@ -15,7 +15,6 @@
       .then((res) => res.json())
       .then((json) => {
         events = json;
-        console.log(JSON.stringify(json, undefined, 2))
       });
   });
 </script>
